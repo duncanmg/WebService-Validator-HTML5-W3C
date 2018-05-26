@@ -10,3 +10,4 @@ t/pod.t
 ignore.txt
 t/WebService/Validator/HTML5/W3C.t
 xt/boilerplate.t
+LICENSE

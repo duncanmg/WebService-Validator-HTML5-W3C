@@ -14,5 +14,6 @@ inc/
 nytprof.out
 pod2htm*.tmp
 pm_to_blib
+.git/
 WebService-Validator-HTML5-W3C-*
 WebService-Validator-HTML5-W3C-*.tar.gz
