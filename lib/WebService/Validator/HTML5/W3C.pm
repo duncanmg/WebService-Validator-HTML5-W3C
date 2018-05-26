@@ -11,7 +11,8 @@ has 'validator_url' => ( 'is' => 'rw', 'default' => 'http://validator.w3.org/nu/
 
 has 'user_agent' => ( 'is' => 'rw', 'default' => "MyApp/0.1" );
 
-has 'ua' => ( 'is' => 'rw', 'default' => sub { LWP::UserAgent->new(); } );
+has 'ua' => ( 'is' => 'rw', 'default' => sub { my $lwp = LWP::UserAgent->new();  
+return $lwp } );
 
 has 'result' => ( 'is' => 'rw' );
 
@@ -31,7 +32,7 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-Validates HTML5 using the W3C validator at http://validator.w3.org/nu. 
+Validates HTML5 using the W3C validator at http://validator.w3.org/nu.
 Direct HTML input only.
 
     use WebService::Validator::HTML5::W3C;
@@ -45,7 +46,7 @@ Direct HTML input only.
     foreach my $e ( @{ $v->errors } ) {
       print $e . "\n";
     }
-		    
+
 =head1 METHODS
 
 =head2 new
@@ -102,7 +103,11 @@ sub _post_text {
     $self->ua->request(
       POST $self->validator_url,
       Content_Type => 'form-data',
-      Content      => [ 'content' => $text ]
+      Connection   => 'keep-alive',
+      Referer      => 'https://validator.w3.org/nu/',
+      'Accept-Encoding' => 'None',
+      Content      => [ 'showsource' => 'no',
+                        'content' => $text ]
     )
   );
   return 1;
@@ -135,7 +140,6 @@ sub _process_errors {
 }
 
 =head1 AUTHOR
-
 Duncan Garland, C<< <duncan.garland\ at ntlworld.com> >>
 
 =head1 BUGS
@@ -224,3 +228,5 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =cut
 
 1;    # End of WebService::Validator::HTML5::W3C
+;
+
