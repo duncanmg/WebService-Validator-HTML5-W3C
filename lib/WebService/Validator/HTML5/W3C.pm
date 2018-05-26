@@ -29,7 +29,7 @@ WebService::Validator::HTML5::W3C - The great new WebService::Validator::HTML5::
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
