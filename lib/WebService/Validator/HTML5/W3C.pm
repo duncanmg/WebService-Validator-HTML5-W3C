@@ -11,8 +11,13 @@ has 'validator_url' => ( 'is' => 'rw', 'default' => 'http://validator.w3.org/nu/
 
 has 'user_agent' => ( 'is' => 'rw', 'default' => "MyApp/0.1" );
 
-has 'ua' => ( 'is' => 'rw', 'default' => sub { my $lwp = LWP::UserAgent->new();  
-return $lwp } );
+has 'ua' => (
+  'is'      => 'rw',
+  'default' => sub {
+    my $lwp = LWP::UserAgent->new();
+    return $lwp;
+  }
+);
 
 has 'result' => ( 'is' => 'rw' );
 
@@ -102,12 +107,14 @@ sub _post_text {
   $self->result(
     $self->ua->request(
       POST $self->validator_url,
-      Content_Type => 'form-data',
-      Connection   => 'keep-alive',
-      Referer      => 'https://validator.w3.org/nu/',
+      Content_Type      => 'form-data',
+      Connection        => 'keep-alive',
+      Referer           => 'https://validator.w3.org/nu/',
       'Accept-Encoding' => 'None',
-      Content      => [ 'showsource' => 'no',
-                        'content' => $text ]
+      Content           => [
+        'showsource' => 'no',
+        'content'    => $text
+      ]
     )
   );
   return 1;
@@ -228,5 +235,4 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =cut
 
 1;    # End of WebService::Validator::HTML5::W3C
-;
 
